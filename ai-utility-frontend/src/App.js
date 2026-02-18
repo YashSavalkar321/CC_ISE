@@ -6,40 +6,11 @@ const BACKEND = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080';
 
 /* ── helpers ── */
 
-/** Extract readable text from the Gemini-parsed backend response */
-function extractReadableOutput(json, service) {
+/** Extract readable text from the backend response */
+function extractReadableOutput(json) {
   const data = json?.output;
   if (!data) return '';
-
   if (typeof data === 'string') return data;
-
-  if (service === 'summarize') {
-    let lines = '';
-    if (data.summary) lines += data.summary + '\n\n';
-    if (Array.isArray(data.bullets)) lines += data.bullets.map(b => `• ${b}`).join('\n');
-    return lines.trim() || JSON.stringify(data, null, 2);
-  }
-
-  if (service === 'email') {
-    let lines = '';
-    if (data.subject) lines += `Subject: ${data.subject}\n\n`;
-    if (data.body) lines += data.body;
-    return lines.trim() || JSON.stringify(data, null, 2);
-  }
-
-  if (service === 'explain-code') {
-    let lines = '';
-    if (data.summary) lines += data.summary + '\n\n';
-    if (Array.isArray(data.steps)) lines += data.steps.map((s, i) => `${i + 1}. ${s}`).join('\n');
-    if (data.complexity) lines += `\n\nComplexity: ${data.complexity}`;
-    return lines.trim() || JSON.stringify(data, null, 2);
-  }
-
-  if (service === 'rewrite') {
-    if (data.rewritten) return data.rewritten;
-    return JSON.stringify(data, null, 2);
-  }
-
   return JSON.stringify(data, null, 2);
 }
 
@@ -116,7 +87,7 @@ function App() {
     });
   }
 
-  const outputText = jsonResult ? extractReadableOutput(jsonResult, service) : '';
+  const outputText = jsonResult ? extractReadableOutput(jsonResult) : '';
 
   return (
     <div className="app">

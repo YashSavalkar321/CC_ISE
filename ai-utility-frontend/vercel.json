@@ -1,11 +1,8 @@
 {
-    "version": 2,
-    "buildCommand": "npm run build",
-    "outputDirectory": "build",
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/index.html"
-      }
-    ]
-  }
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "rewrites": [
+    { "source": "/((?!static|asset-manifest|favicon|logo|manifest|robots).*)", "destination": "/index.html" }
+  ]
+}

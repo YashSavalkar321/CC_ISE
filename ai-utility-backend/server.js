@@ -55,17 +55,7 @@ async function callLLM(prompt, opts = {}) {
     const candidates = resp.data.candidates || [];
     const text = candidates[0]?.content?.parts?.[0]?.text || '';
 
-    // Try to parse as JSON (our prompts ask for JSON output)
-    let parsed;
-    try {
-      // Strip markdown code fences if Gemini wraps the JSON
-      const cleaned = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-      parsed = JSON.parse(cleaned);
-    } catch {
-      parsed = text; // Return raw text if not valid JSON
-    }
-
-    return { ok: true, data: parsed };
+    return { ok: true, data: text.trim() };
   } catch (err) {
     return {
       ok: false,
@@ -79,7 +69,16 @@ async function callLLM(prompt, opts = {}) {
    --------------------- */
 
 function promptSummarize(text) {
-  return `Summarize the following text in 4 short bullet points. Keep them concise and focus on key facts. Output as JSON with keys: "bullets" (array of strings) and "summary" (one-liner).
+  return `Summarize the following text concisely.
+First write a one-line summary, then list 4 short bullet points with key facts.
+Format your answer as plain text only — no JSON, no markdown, no code fences.
+Example format:
+Summary: <one line>
+
+• Bullet 1
+• Bullet 2
+• Bullet 3
+• Bullet 4
 ---
 Text:
 ${text}
@@ -89,8 +88,8 @@ ${text}
 function promptEmailGen(context) {
   // context: { recipientRole, tone, purpose, details }
   return `Write a professional, concise email using the details below.
-Output JSON exactly with keys: "subject" and "body".
-Do not include any explanation outside the JSON.
+Return ONLY the email as plain text with the subject on the first line prefixed with "Subject: " followed by a blank line and then the email body.
+Do not include any JSON, markdown, or code fences.
 ---
 Recipient role: ${context.recipientRole || 'colleague'}
 Tone: ${context.tone || 'professional'}
@@ -100,11 +99,11 @@ Details: ${context.details || ''}
 }
 
 function promptExplainCode(code) {
-  return `Explain the following code for a beginner. Produce a JSON object with keys:
-- "summary": one-paragraph plain-language summary
-- "steps": array of numbered-step strings that explain key parts
-- "complexity": short note on time/space complexity (if known) or "unknown".
-Do not add anything outside the JSON.
+  return `Explain the following code for a beginner in plain text.
+First write a one-paragraph summary of what the code does.
+Then list numbered steps explaining the key parts.
+Finally add a short note on time/space complexity (or "unknown").
+Do NOT output JSON, markdown, or code fences — plain text only.
 ---
 Code:
 ${code}
@@ -113,8 +112,8 @@ ${code}
 
 function promptRewriteTone(text, tone) {
   return `Rewrite the following text to have a "${tone}" tone.
-Return JSON with key "rewritten".
-Do not add anything else.
+Return ONLY the rewritten text as plain text.
+Do not include any JSON, markdown, code fences, or explanations.
 ---
 Original:
 ${text}
