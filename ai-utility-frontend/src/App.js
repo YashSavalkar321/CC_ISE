@@ -60,10 +60,34 @@ function App() {
 
   return (
     <div className="app">
-      <header className="topbar">
-        <h1>AI Utility Hub</h1>
-        <p className="subtitle">Multiple utilities powered by your LLM (backend hides the API key)</p>
+      <header className="site-header">
+        <div className="brand">
+          <div className="logo">AI</div>
+          <div>
+            <h1>AI Utility Hub</h1>
+            <p>Multiple utilities powered by your LLM (backend hides the API key)</p>
+          </div>
+        </div>
+
+        <div className="nav-cta">
+          <button className="btn" onClick={() => { const el = document.getElementById('main-panel'); if(el) el.scrollIntoView({behavior:'smooth'}); }}>Try a tool</button>
+          <button className="btn ghost">Docs</button>
+        </div>
       </header>
+
+      <section className="hero">
+        <div className="hero-left">
+          <h2>Small, practical AI utilities for everyday tasks</h2>
+          <p>Summarize long text, generate professional emails, explain code, and rewrite text in different tones — fast and privacy-focused.</p>
+          <div className="cta-row">
+            <button className="btn" onClick={() => { const el = document.getElementById('main-panel'); if(el) el.scrollIntoView({behavior:'smooth'}); }}>Get started</button>
+            <button className="btn ghost">Learn more</button>
+          </div>
+        </div>
+        <div className="hero-right">
+          {/* decorative / could hold illustration */}
+        </div>
+      </section>
 
       <main className="container">
         <aside className="sidebar">
@@ -72,7 +96,7 @@ function App() {
           ))}
         </aside>
 
-        <section className="panel">
+        <section id="main-panel" className="panel">
           <form onSubmit={handleSubmit}>
             <label className="label">Service: <strong>{service}</strong></label>
 
