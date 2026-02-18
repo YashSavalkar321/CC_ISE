@@ -1,6 +1,6 @@
 :root{
-  --bg:#0f1724; /* deep page bg */
-  --panel-bg:#0b1220; /* dark content bg for JSON */
+  --bg:#0f1724;
+  --panel-bg:#0b1220;
   --surface:#0f1728;
   --card:#0f1728;
   --muted:#9aa3b2;
@@ -15,27 +15,41 @@
 html,body,#root{height:100%}
 body{margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:linear-gradient(180deg,#071028 0%, #07172a 60%);color:#e6eef8;line-height:1.45}
 
-/* Header / Nav */
-.site-header{display:flex;align-items:center;justify-content:space-between;padding:22px 28px;max-width:1200px;margin:0 auto}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-family:Poppins,Inter,sans-serif}
-.brand h1{margin:0;font-size:18px;font-weight:700}
-.brand p{margin:0;color:var(--muted);font-size:13px}
-.nav-cta{display:flex;gap:12px;align-items:center}
-.btn{background:var(--accent);color:#071026;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600;transition:transform .15s ease, box-shadow .15s ease}
+/* ── Navbar ── */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(7,16,40,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.04)}
+.navbar-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:14px 28px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;font-family:Poppins,Inter,sans-serif}
+.brand-name{font-weight:700;font-size:17px;color:#e6eef8}
+.nav-links{display:flex;list-style:none;gap:24px;margin:0;padding:0}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:#fff}
+.btn{background:var(--accent);color:#071026;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:600;font-size:14px;transition:transform .15s ease, box-shadow .15s ease;text-decoration:none;display:inline-flex;align-items:center}
 .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,140,255,0.14)}
 .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(91,140,255,0.12)}
+.btn.btn-sm{padding:6px 12px;font-size:13px;border-radius:8px}
 
-/* Hero */
+/* ── Hero ── */
 .hero{max-width:1200px;margin:18px auto 22px;padding:28px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(2,6,23,0.6);display:flex;gap:24px;align-items:center}
 .hero-left{flex:1}
 .hero h2{margin:0;font-size:28px;line-height:1.05}
 .hero p{margin:10px 0 0;color:var(--muted);font-size:15px}
 .hero .cta-row{margin-top:16px;display:flex;gap:12px}
 
-/* Main layout */
+/* ── Tools about section ── */
+.tools-about{max-width:1200px;margin:40px auto 30px;padding:0 28px;text-align:center}
+.tools-about h2{font-size:24px;margin:0 0 8px}
+.tools-about-subtitle{color:var(--muted);font-size:14px;margin:0 0 24px;max-width:600px;margin-left:auto;margin-right:auto}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.tool-card{background:var(--glass);border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:22px 18px;text-align:left;transition:transform .15s ease, box-shadow .15s ease}
+.tool-card:hover{transform:translateY(-4px);box-shadow:0 12px 34px rgba(2,6,23,0.5)}
+.tool-icon{font-size:28px;display:block;margin-bottom:10px}
+.tool-card h3{margin:0 0 6px;font-size:16px;font-weight:700}
+.tool-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+
+/* ── Main layout ── */
 .container{display:grid;grid-template-columns:260px 1fr;gap:20px;max-width:1200px;margin:18px auto;padding:0 8px}
-.sidebar{background:transparent;padding:6px;border-radius:12px;position:sticky;top:24px;height:fit-content}
+.sidebar{background:transparent;padding:6px;border-radius:12px;position:sticky;top:80px;height:fit-content}
 .panel{background:rgba(255,255,255,0.02);padding:20px;border-radius:12px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
 
 /* service card */
@@ -45,6 +59,7 @@ body{margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:linear-
 .service-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
 .service-title{font-weight:600;margin:0}
 .service-desc{margin:4px 0 0;color:var(--muted);font-size:13px}
+.service-hint{color:var(--muted);font-size:13px;margin:0 0 12px;line-height:1.5}
 
 /* form elements */
 .label{display:block;margin-bottom:8px;font-weight:700;color:#e6eef8}
@@ -56,17 +71,26 @@ body{margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:linear-
 
 /* output */
 .output{margin-top:18px}
-.json{background:var(--panel-bg);color:#e6eef8;padding:14px;border-radius:10px;overflow:auto;max-height:420px;border:1px solid rgba(255,255,255,0.03)}
-.json.error{background:#3b1a1a}
+.output-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.output-header h3{margin:0}
+.copy-btn{transition:background .2s}
+.output-error{background:#3b1a1a;color:#fca5a5;padding:14px;border-radius:10px;font-size:14px;white-space:pre-wrap;border:1px solid rgba(252,165,165,0.12)}
+.output-snippet{width:100%;min-height:180px;max-height:420px;padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:var(--panel-bg);color:#e6eef8;font-family:'Fira Code',Consolas,monospace;font-size:14px;line-height:1.6;resize:vertical;cursor:text}
+.output-snippet:focus{outline:none;border-color:rgba(91,140,255,0.3)}
 .hint{color:var(--muted);padding:16px;border-radius:8px;background:var(--glass-2)}
 
 .footer{max-width:1200px;margin:30px auto 60px;color:var(--muted);text-align:center;font-size:13px}
 
 /* responsive */
 @media (max-width:920px){
-  .container{grid-template-columns:1fr;}
+  .container{grid-template-columns:1fr}
   .sidebar{order:2}
   .panel{order:1}
   .hero{flex-direction:column;align-items:flex-start}
+  .tools-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media (max-width:560px){
+  .tools-grid{grid-template-columns:1fr}
 }
 
